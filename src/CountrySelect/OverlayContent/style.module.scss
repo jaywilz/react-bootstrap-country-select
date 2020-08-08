@@ -1,0 +1,15 @@
+.overlay-content {
+
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 4px;
+  max-height: 225px;
+  overflow-y: scroll;
+
+  .no-matches {
+
+    padding: 0.75rem 1.25rem;
+    color: #6c757d;
+
+  }
+
+}

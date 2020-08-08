@@ -1,0 +1,37 @@
+.country-select {
+
+  .input-group {
+
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+
+    color: #495057;
+    background-color: #fff;
+    // border-color: #80bdff;
+    // outline: 0;
+    // box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+
+    .input-group__flag {
+
+      border: none;
+      background: transparent;
+  
+    }
+
+    .form-control {
+
+      border: 0;
+
+      &:focus {
+
+        border-color: transparent;
+        outline: 0;
+        box-shadow: none;
+
+      }
+
+    }
+
+  }
+
+}
