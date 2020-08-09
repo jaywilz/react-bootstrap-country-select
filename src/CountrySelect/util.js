@@ -1,3 +1,16 @@
+export const applyExclusionsAndAdditions = (countries, exclusions, additions) => {
+
+  if (!exclusions && !additions) return countries;
+
+  const excluded = (exclusions || []).reduce((acc, id) => ({ ...acc, [id]: true }), {});
+
+  return [
+    ...countries.filter(c => excluded[c.id] === undefined),
+    ...(additions || []),
+  ];
+
+};
+
 export const filter = (matchNameFromStart, matchAbbreviations) => inputText => {
 
   const regex = new RegExp(`${matchNameFromStart ? '^' : ''}${inputText}`, 'i');

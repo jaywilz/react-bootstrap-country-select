@@ -8,9 +8,9 @@ import {
   CLEAR,
 } from './constants';
 
-export const init = dispatch => countries => dispatch({
+export const init = dispatch => combinedCountries => dispatch({
   type: INIT,
-  countries,
+  combinedCountries,
 });
 
 export const focus = dispatch => () => dispatch({
@@ -33,9 +33,8 @@ export const activeListItemChange = dispatch => activeListItemIndex => dispatch(
   activeListItemIndex,
 });
 
-export const countrySelect = dispatch => selectedCountry => dispatch({
+export const countrySelect = dispatch => () => dispatch({
   type: COUNTRY_SELECT,
-  selectedCountry,
 });
 
 export const clear = dispatch => () => dispatch({

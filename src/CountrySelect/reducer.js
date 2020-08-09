@@ -11,16 +11,16 @@ import {
 export const INITIAL_STATE = {
   focused: false,
   filterOptions: null,
-  countries: [],
+  combinedCountries: [],
   inputText: '',
   list: [],
   activeListItemIndex: -1,
 };
 
-const init = (state, { countries }) => ({
+const init = (state, { combinedCountries }) => ({
   ...state,
-  countries,
-  list: [ ...countries ],
+  combinedCountries,
+  list: [ ...combinedCountries ],
 });
 
 const focus = state => ({
@@ -49,17 +49,17 @@ const activeListItemChange = (state, { activeListItemIndex }) => ({
   activeListItemIndex,
 });
 
-const countrySelect = (state, { selectedCountry }) => ({
+const countrySelect = state => ({
   ...state,
-  inputText: selectedCountry.name,
-  list: [],
+  inputText: '',
+  list: [ ...state.combinedCountries ],
   activeListItemIndex: -1,
 });
 
 const clear = state => ({
   ...state,
   inputText: '',
-  list: [ ...state.countries ],
+  list: [ ...state.combinedCountries ],
   activeListItemIndex: -1,
 });
 

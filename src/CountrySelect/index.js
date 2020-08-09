@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { InputGroup, FormControl, Overlay } from 'react-bootstrap';
 
 import { COUNTRIES } from './data';
 
-import { removeEmojiFlag, getUpdatedList } from './util';
+import {
+  applyExclusionsAndAdditions,
+  removeEmojiFlag,
+  getUpdatedList,
+} from './util';
 
 import OverlayContent from './OverlayContent';
 
@@ -23,34 +28,31 @@ import style from './style.module.scss';
 
 const CountrySelect = ({
   value,
-  onChange,
+  onChange = () => {},
   onTextChange,
   countries = COUNTRIES,
-  exclusions = [],
-  additions = [],
+  exclusions,
+  additions,
   valueAs = 'object', // 'object' | 'id'
+  flags = true,
+  flush = true,
+  disabled = false,
+  placeholder = 'Type or select country...',
+  noMatchesText = 'No matches',
+  size, // 'sm' | 'lg'
+  sort, // e.g. (c1, c2) => c1.name < c2.name ? -1 : (c1.name > c2.name ? 1 : 0),
   matchNameFromStart = true,
   matchAbbreviations = false,
-  flags = true,
-  sort, // e.g. (c1, c2) => c1.name < c2.name ? -1 : (c1.name > c2.name ? 1 : 0),
   countryLabelFormatter = ({ name }) => name,
-  placeholder = 'Type or select country...',
-  listWidth ,
-  listMaxWidth,
+  throwInvalidValueError = false, 
   listMaxHeight,
   formControlProps = {},
   overlayProps = {},
-  noMatchesText = 'No matches',
-  size, // 'sm' | 'lg'
-  listItemSize = null,
-  variant = 'primary', // 'primary' | 'secondary' | ...
-  throwInvalidValueError = false, 
-  flush = true,
-  disabled = false,
 }) => {
 
   const inputGroupRef = useRef(null);
   const formControlRef = useRef(null);
+  const hasInitRef = useRef(false);
   const [ width, setWidth ] = useState(-1);
 
   const [ {
@@ -58,6 +60,7 @@ const CountrySelect = ({
     inputText,
     list,
     activeListItemIndex,
+    combinedCountries,
   }, dispatch ] = useReducer(reducer, INITIAL_STATE);
 
   const handleFocus = focus(dispatch);
@@ -67,16 +70,22 @@ const CountrySelect = ({
   const handleCountrySelect = countrySelect(dispatch);
   const handleClear = clear(dispatch);
 
-  const selectedCountry = value ? countries.find(country => country.id === (value.id || value)) : null;
+  const selectedCountry = value ? (combinedCountries || []).find(country => country.id === (value.id || value)) : null;
 
   if (throwInvalidValueError && value && !selectedCountry)
     throw new Error(`No matching country for value: ${JSON.stringify(value)}`);
 
   useEffect(() => {
 
-    init(dispatch)(countries);
+    if (hasInitRef.current) return;
 
-  }, [ matchNameFromStart, matchAbbreviations, sort, countries ]);
+    const combinedCountries = applyExclusionsAndAdditions(countries, exclusions, additions);
+
+    init(dispatch)(combinedCountries);
+
+    hasInitRef.current = true;
+
+  }, [ countries, exclusions, additions ]);
 
   useEffect(() => {
 
@@ -88,7 +97,7 @@ const CountrySelect = ({
 
     const country = list[listItemIndex];
 
-    handleCountrySelect(list[listItemIndex]);
+    handleCountrySelect();
     onChange(valueAs === 'id' ? country.id : country);
 
   };
@@ -109,7 +118,7 @@ const CountrySelect = ({
     }
 
     const [ updatedList, updatedActiveListItemIndex ]
-      = getUpdatedList(text, list, activeListItemIndex, countries, sort, matchNameFromStart, matchAbbreviations);
+      = getUpdatedList(text, list, activeListItemIndex, combinedCountries, sort, matchNameFromStart, matchAbbreviations);
 
     handleTextChange(text, updatedList, updatedActiveListItemIndex);
 
@@ -150,6 +159,7 @@ const CountrySelect = ({
       <InputGroup
         ref={inputGroupRef}
         className={style['input-group']}
+        size={size}
       >
 
         { (!flush && flags) && 
@@ -175,7 +185,9 @@ const CountrySelect = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
-          size={size}
+          disabled={disabled}
+          spellCheck={false}
+          autoComplete='false'
           {...formControlProps}
         />
 
@@ -207,6 +219,7 @@ const CountrySelect = ({
               countryLabelFormatter={countryLabelFormatter}
               flags={flags}
               noMatchesText={noMatchesText}
+              maxHeight={listMaxHeight}
               onListItemClick={select}
             />
 
@@ -219,6 +232,41 @@ const CountrySelect = ({
     </div>
   );
 
+};
+
+CountrySelect.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+    PropTypes.string,
+  ]),
+  onChange: PropTypes.func,
+  onTextChange: PropTypes.func,
+  countries: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })),
+  exclusions: PropTypes.arrayOf(PropTypes.string),
+  additions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })),
+  valueAs: PropTypes.oneOf([ 'object', 'id' ]),
+  flags: PropTypes.bool,
+  flush: PropTypes.bool,
+  disabled: PropTypes.bool,
+  placeholder: PropTypes.node,
+  noMatchesText: PropTypes.node,
+  size: PropTypes.oneOf([ 'sm', 'lg' ]),
+  sort: PropTypes.func,
+  matchNameFromStart: PropTypes.bool,
+  matchAbbreviations: PropTypes.bool,
+  countryLabelFormatter: PropTypes.func,
+  throwInvalidValueError: PropTypes.bool, 
+  listMaxHeight: PropTypes.number,
+  formControlProps: PropTypes.object,
+  overlayProps: PropTypes.object,
 };
 
 export default CountrySelect;

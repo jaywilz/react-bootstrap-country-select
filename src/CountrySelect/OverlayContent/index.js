@@ -10,6 +10,7 @@ const OverlayContent = ({
   countryLabelFormatter,
   flags,
   noMatchesText,
+  maxHeight = 225,
   onListItemClick,
 }) => {
 
@@ -24,6 +25,9 @@ const OverlayContent = ({
   return (
     <div
       className={style['overlay-content']}
+      style={{
+        maxHeight: `${maxHeight}px`,
+      }}
       ref={el}
     >
 
