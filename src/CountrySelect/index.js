@@ -1,19 +1,21 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react';
 import { InputGroup, FormControl, Overlay } from 'react-bootstrap';
 
-import OverlayContent from './OverlayContent';
-
 import { COUNTRIES } from './data';
+
+import { removeEmojiFlag, getUpdatedList } from './util';
+
+import OverlayContent from './OverlayContent';
 
 import reducer, { INITIAL_STATE } from './reducer';
 
 import {
-  mount,
+  init,
   focus,
   blur,
   textChange,
   activeListItemChange,
-  textCompletion,
+  countrySelect,
   clear,
 } from './actions';
 
@@ -27,31 +29,28 @@ const CountrySelect = ({
   exclusions = [],
   additions = [],
   valueAs = 'object', // 'object' | 'id'
-  displayDropdownOnFocus = false,
-  debounce = false,
-  multipleSelect = false,
-  listItemSize = null,
   matchNameFromStart = true,
   matchAbbreviations = false,
   flags = true,
-  sortBy = 'name',
-  scrollbarVisible = false,
+  sort, // e.g. (c1, c2) => c1.name < c2.name ? -1 : (c1.name > c2.name ? 1 : 0),
   countryLabelFormatter = ({ name }) => name,
-  autoComplete = true,
   placeholder = 'Type or select country...',
-  listWidth = 'auto',
-  listMaxWidth = 'auto',
-  listMaxHeight = 'auto',
+  listWidth ,
+  listMaxWidth,
+  listMaxHeight,
   formControlProps = {},
   overlayProps = {},
   noMatchesText = 'No matches',
   size, // 'sm' | 'lg'
-  throwInvalidValueError = true, 
+  listItemSize = null,
+  variant = 'primary', // 'primary' | 'secondary' | ...
+  throwInvalidValueError = false, 
+  flush = true,
+  disabled = false,
 }) => {
 
   const inputGroupRef = useRef(null);
   const formControlRef = useRef(null);
-  const isMounted = useRef(false);
   const [ width, setWidth ] = useState(-1);
 
   const [ {
@@ -65,22 +64,19 @@ const CountrySelect = ({
   const handleBlur = blur(dispatch);
   const handleTextChange = textChange(dispatch);
   const handleListActiveItemChange = activeListItemChange(dispatch);
-  const handleTextCompletion = textCompletion(dispatch);
+  const handleCountrySelect = countrySelect(dispatch);
   const handleClear = clear(dispatch);
 
   const selectedCountry = value ? countries.find(country => country.id === (value.id || value)) : null;
 
-  if (value && !selectedCountry && throwInvalidValueError) throw new Error(`No matching country for value: ${JSON.stringify(value)}`);
+  if (throwInvalidValueError && value && !selectedCountry)
+    throw new Error(`No matching country for value: ${JSON.stringify(value)}`);
 
   useEffect(() => {
 
-    mount(dispatch)({
-      matchNameFromStart,
-      matchAbbreviations,
-      sortBy,
-    }, countries);
+    init(dispatch)(countries);
 
-  }, [ matchNameFromStart, matchAbbreviations, sortBy, countries ]);
+  }, [ matchNameFromStart, matchAbbreviations, sort, countries ]);
 
   useEffect(() => {
 
@@ -88,25 +84,37 @@ const CountrySelect = ({
 
   }, [ inputGroupRef ]);
 
-  useEffect(() => {
+  const select = listItemIndex => {
 
-    if (isMounted.current && onTextChange) {
+    const country = list[listItemIndex];
 
-      onTextChange(inputText);
-      
-      if (value) onChange(null);
+    handleCountrySelect(list[listItemIndex]);
+    onChange(valueAs === 'id' ? country.id : country);
 
-    } else {
+  };
 
-      isMounted.current = true;
+  const escape = () => {
+
+    handleClear();
+    onChange(null);
+
+  };
+
+  const inputChange = text => {
+
+    if (selectedCountry && flags) {
+
+      text = removeEmojiFlag(text);
 
     }
 
-  }, [ onTextChange, inputText ]);
+    const [ updatedList, updatedActiveListItemIndex ]
+      = getUpdatedList(text, list, activeListItemIndex, countries, sort, matchNameFromStart, matchAbbreviations);
 
-  const handleListItemClick = listItemIndex => {
+    handleTextChange(text, updatedList, updatedActiveListItemIndex);
 
-    onChange(valueAs === 'id' ? list[listItemIndex].id : list[listItemIndex]);
+    if (onTextChange) onTextChange(text);
+    if (value) onChange(null);
 
   };
 
@@ -126,30 +134,25 @@ const CountrySelect = ({
 
     } else if (ev.key === 'Enter') {
 
-      onChange(valueAs === 'id' ? list[activeListItemIndex].id : list[activeListItemIndex]);
+      if (activeListItemIndex >= 0) select(activeListItemIndex)
 
     } else if (ev.key === 'Escape') {
 
-      handleClear();
-      onChange(null);
-
-    } else if (ev.key === 'ArrowRight') {
-
-      handleTextCompletion();
+      escape();
 
     }
 
   };
 
   return (
-    <div className={style['country-select']}>
+    <div className={`${style['country-select']} ${flush ? style.flush : ''} ${size ? style[size] : ''} ${focused ? style.focused : ''}`}>
 
       <InputGroup
         ref={inputGroupRef}
         className={style['input-group']}
       >
 
-        { selectedCountry &&
+        { (!flush && flags) && 
           <InputGroup.Prepend>
 
             <InputGroup.Text
@@ -166,12 +169,13 @@ const CountrySelect = ({
         <FormControl
           ref={formControlRef}
           className={style['form-control']}
-          value={selectedCountry ? selectedCountry.name : inputText}
+          value={selectedCountry ? `${flush && flags ? selectedCountry.flag + '  ' : ''}${selectedCountry.name}` : inputText}
           onKeyDown={handleKey}
-          onChange={ev => handleTextChange(ev.target.value)}
+          onChange={ev => inputChange(ev.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
+          size={size}
           {...formControlProps}
         />
 
@@ -203,7 +207,7 @@ const CountrySelect = ({
               countryLabelFormatter={countryLabelFormatter}
               flags={flags}
               noMatchesText={noMatchesText}
-              onListItemClick={handleListItemClick}
+              onListItemClick={select}
             />
 
           </div>

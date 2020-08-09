@@ -25,6 +25,9 @@ function App() {
         <button onClick={() => setVal({ id: 'de' })}>set value as: Germany</button>
       </div>
       <div>
+        <button onClick={() => setVal(null)}>set value as: null</button>
+      </div>
+      <div>
         <button onClick={() => setVal({ id: 'xyz' })}>set value as: Invalid</button>
       </div>
 
@@ -38,6 +41,9 @@ function App() {
           value={val}
           onChange={setVal}
           onTextChange={setText}
+          flush={false}
+          flags={false}
+          // size='sm'
           // valueAs='id'
           // throwInvalidValueError={false}
         />

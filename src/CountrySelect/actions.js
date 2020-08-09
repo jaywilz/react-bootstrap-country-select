@@ -1,17 +1,15 @@
 import {
-  MOUNT,
+  INIT,
   FOCUS,
   BLUR,
   TEXT_CHANGE,
   ACTIVE_LIST_ITEM_CHANGE,
-  TEXT_COMPLETION,
   COUNTRY_SELECT,
   CLEAR,
 } from './constants';
 
-export const mount = dispatch => (filterOptions, countries) => dispatch({
-  type: MOUNT,
-  filterOptions,
+export const init = dispatch => countries => dispatch({
+  type: INIT,
   countries,
 });
 
@@ -23,18 +21,16 @@ export const blur = dispatch => () => dispatch({
   type: BLUR,
 });
 
-export const textChange = dispatch => inputText => dispatch({
+export const textChange = dispatch => (inputText, list, activeListItemIndex) => dispatch({
   type: TEXT_CHANGE,
   inputText,
+  list,
+  activeListItemIndex,
 });
 
 export const activeListItemChange = dispatch => activeListItemIndex => dispatch({
   type: ACTIVE_LIST_ITEM_CHANGE,
   activeListItemIndex,
-});
-
-export const textCompletion = dispatch => () => dispatch({
-  type: TEXT_COMPLETION,
 });
 
 export const countrySelect = dispatch => selectedCountry => dispatch({
