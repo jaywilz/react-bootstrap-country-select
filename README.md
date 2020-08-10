@@ -1,68 +1,90 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Bootstrap Country Select
 
-## Available Scripts
+A country select component with flag icons for React Bootstrap.
 
-In the project directory, you can run:
+## Installation
 
-### `yarn start`
+    yarn add react-bootstrap-country-select
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+or
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+    npm install react-bootstrap-country-select
 
-### `yarn test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[React Bootstrap](https://github.com/react-bootstrap/react-bootstrap) must be installed and the [Bootstrap CSS](https://react-bootstrap.netlify.com/getting-started/introduction#stylesheets) imported (or included).
 
-### `yarn build`
+## Usage
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In your `index.js` or similar:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```JavaScript
+import 'bootstrap/dist/css/bootstrap.css'; // or include from a CDN
+import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Your component:
 
-### `yarn eject`
+```JavaScript
+import React, { useState } from 'react';
+import CountrySelect from 'react-bootstrap-country-select';
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const MyComponent = () => {
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  const [ value, setValue ] = useState(null); 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  return (
+    <CountrySelect
+      value={value}
+      onChange={setValue}
+    />
+  );
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+};
+```
 
-## Learn More
+## Features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ - Compatible with React Bootstrap v1.0.0+ and Bootstrap 4;
+ - Implemented using standard React Bootstrap components;
+ - Autosuggest: a list of matching countries is displayed text is entered in input;
+ - Country data is provided;
+ - Specific countries can be excluded or additional countries can be added;
+ - Country flag icons;
+ - onChange and onTextChange callbacks; 
+ - Custom sort and country list formatter functions can be provided;
+ - Aligns horizontally with Bootstrap form controls;
+ - Bootstrap small (`sm`) and large (`lg`) sizes are supported;
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Options (as React props)
 
-### Code Splitting
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `object` \| `string` | | The current value: a country object or ID |
+| `onChange` | `function` | | A callback fired when a country is selected. |
+| `onTextChange` | `function` | | A callback fired when text in. |
+| `countries` | `array` | | An array of country objects used to populate the country list. Provide this if you'd like to use your own countries data. |
+| `exclusions` | `array` | | An array of country IDs that defines the countries to be excluded from the country list. |
+| `additions` | `array` | | Additional countries in the same format as `countries`. |
+| `valueAs` | `object` \| `id` | `object` | Defines if `value` is an object or an ID. |
+| `flags` | `boolean` | `true` | Flags are displayed when `true`. |
+| `flush` | `boolean` | `true` | When `true` the selected country flag appears in the input. When `false` it is rendered using [`<InputGroup.Text/>`](https://react-bootstrap.netlify.app/components/input-group/). |
+| `disabled` | `boolean` | `false` | Disables the country select. |
+| `placeholder` | `string` | `"Type or select country..."` | Placeholder text displayed in empty input. |
+| `noMatchesText` | `string` | `"No matches"` | Placeholder text displayed in empty input. |
+| `size` | `'sm'` \| `'lg'` | | Input size variants, for compatibility with other Bootstrap form components. |
+| `listMaxHeight` | `number` | | Maximum pixel height of the list overlay. |
+| `sort` | `function` | | A custom sort function that determines the order of the country list. |
+| `matchNameFromStart` | `boolean` | `true` | If true country names are matched against inputted text from the string start. |
+| `matchAbbreviations` | `boolean` | `false` | If true alpha2, alpha3 and IOC abbreviations are used in addition to countries names when matching inputted text. |
+| `countryLabelFormatter` | `function` | | A custom country list item formatter. |
+| `throwInvalidValueError` | `boolean` | `false` | If true an error is thrown if the provided value does match a country. |
+| `formControlProps` | `object` | | Properties applied to the input `<FormControl/>`. |
+| `overlayProps` | `object` | | Properties applied to the `<div>` element. |
+| `bsPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized bootstrap css. |
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## License
 
-### Analyzing the Bundle Size
+Copyright (c) 2020 Jason Wilson
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[MIT License](./LICENSE)

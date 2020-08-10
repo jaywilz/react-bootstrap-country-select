@@ -33,13 +33,13 @@ const CountrySelect = ({
   countries = COUNTRIES,
   exclusions,
   additions,
-  valueAs = 'object', // 'object' | 'id'
+  valueAs = 'object',
   flags = true,
   flush = true,
   disabled = false,
   placeholder = 'Type or select country...',
   noMatchesText = 'No matches',
-  size, // 'sm' | 'lg'
+  size,
   sort, // e.g. (c1, c2) => c1.name < c2.name ? -1 : (c1.name > c2.name ? 1 : 0),
   matchNameFromStart = true,
   matchAbbreviations = false,
