@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List should render correctly with active item index 1`] = `
+<ul
+  className="country-select__list"
+>
+  <li
+    className="country-select__list-item"
+    onClick={[Function]}
+  >
+    <span
+      className="country-select__flag"
+    >
+      🇫🇷
+    </span>
+    France
+  </li>
+  <li
+    className="country-select__list-item active"
+    onClick={[Function]}
+  >
+    <span
+      className="country-select__flag"
+    >
+      🇩🇪
+    </span>
+    Germany
+  </li>
+</ul>
+`;
+
+exports[`List should render correctly with custom class prefix 1`] = `
+<ul
+  className="custom-prefix__list"
+>
+  <li
+    className="custom-prefix__list-item"
+    onClick={[Function]}
+  >
+    <span
+      className="custom-prefix__flag"
+    >
+      🇫🇷
+    </span>
+    France
+  </li>
+  <li
+    className="custom-prefix__list-item"
+    onClick={[Function]}
+  >
+    <span
+      className="custom-prefix__flag"
+    >
+      🇩🇪
+    </span>
+    Germany
+  </li>
+</ul>
+`;
+
+exports[`List should render correctly with default props 1`] = `
+<ul
+  className="country-select__list"
+>
+  <li
+    className="country-select__list-item"
+    onClick={[Function]}
+  >
+    <span
+      className="country-select__flag"
+    >
+      🇫🇷
+    </span>
+    France
+  </li>
+  <li
+    className="country-select__list-item"
+    onClick={[Function]}
+  >
+    <span
+      className="country-select__flag"
+    >
+      🇩🇪
+    </span>
+    Germany
+  </li>
+</ul>
+`;

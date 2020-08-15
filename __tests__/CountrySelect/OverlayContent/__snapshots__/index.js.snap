@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OverlayContent should render correctly 1`] = `
+<div
+  className="undefined__overlay-content"
+  style={
+    Object {
+      "maxHeight": "250px",
+    }
+  }
+>
+  <ul
+    className="undefined__list"
+  >
+    <li
+      className="undefined__list-item"
+      onClick={[Function]}
+    >
+      <span
+        className="undefined__flag"
+      >
+        🇫🇷
+      </span>
+      France
+    </li>
+    <li
+      className="undefined__list-item"
+      onClick={[Function]}
+    >
+      <span
+        className="undefined__flag"
+      >
+        🇩🇪
+      </span>
+      Germany
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`OverlayContent should render correctly with custom no matches text 1`] = `
+<div
+  className="undefined__overlay-content"
+  style={
+    Object {
+      "maxHeight": "250px",
+    }
+  }
+>
+  <ul
+    className="undefined__list"
+  >
+    <li
+      className="undefined__list-item"
+      onClick={[Function]}
+    >
+      <span
+        className="undefined__flag"
+      >
+        🇫🇷
+      </span>
+      France
+    </li>
+    <li
+      className="undefined__list-item"
+      onClick={[Function]}
+    >
+      <span
+        className="undefined__flag"
+      >
+        🇩🇪
+      </span>
+      Germany
+    </li>
+  </ul>
+</div>
+`;

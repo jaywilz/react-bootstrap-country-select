@@ -81,7 +81,7 @@ const MyComponent = () => {
 | `throwInvalidValueError` | `boolean` | `false` | If `true` an error is thrown if the provided value does match a country. |
 | `formControlProps` | `object` | | Properties applied to the input `<FormControl/>`. |
 | `overlayProps` | `object` | | Properties applied to the overlay `<div>` element that contains the country list. |
-| `bsPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized bootstrap css. |
+| `classPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized bootstrap css. |
 
 ## License
 

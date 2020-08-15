@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem should render correctly when active 1`] = `
+<li
+  className="country-select__list-item active"
+  onClick={[Function]}
+>
+  <span
+    className="country-select__flag"
+  >
+    🇫🇷
+  </span>
+  France
+</li>
+`;
+
+exports[`ListItem should render correctly with custom classPrefix 1`] = `
+<li
+  className="custom-prefix__list-item"
+  onClick={[Function]}
+>
+  <span
+    className="custom-prefix__flag"
+  >
+    🇫🇷
+  </span>
+  France
+</li>
+`;
+
+exports[`ListItem should render correctly with default props 1`] = `
+<li
+  className="country-select__list-item"
+  onClick={[Function]}
+>
+  <span
+    className="country-select__flag"
+  >
+    🇫🇷
+  </span>
+  France
+</li>
+`;
+
+exports[`ListItem should render correctly without flags 1`] = `
+<li
+  className="country-select__list-item"
+  onClick={[Function]}
+>
+  France
+</li>
+`;

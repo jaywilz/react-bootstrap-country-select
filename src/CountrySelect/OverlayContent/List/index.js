@@ -5,14 +5,14 @@ import ListItem from './ListItem';
 import './style.scss';
 
 const List = ({
-  bsPrefix,
+  classPrefix,
   containerEl,
   list,
   activeItemIndex,
   countryLabelFormatter,
   flags,
   onItemClick,
-  onActiveItemCutOverflow
+  onActiveItemOverflow
 }) => {
 
   const listEl = useRef(null);
@@ -34,23 +34,23 @@ const List = ({
 
       // TODO: handle overlay beyond window bottom
 
-      if (isOverflowBeyondTop) onActiveItemCutOverflow(-overflowOffTopAmount);
-      if (isOverflowBeyondBottom) onActiveItemCutOverflow(overflowOffBottomAmount);
+      if (isOverflowBeyondTop) onActiveItemOverflow(-overflowOffTopAmount);
+      if (isOverflowBeyondBottom) onActiveItemOverflow(overflowOffBottomAmount);
 
     }
 
-  }, [ containerEl, listEl, activeItemEl, onActiveItemCutOverflow ]);
+  }, [ containerEl, listEl, activeItemEl, onActiveItemOverflow ]);
 
   return (
     <ul
-      className={`${bsPrefix}__list`}
+      className={`${classPrefix}__list`}
       ref={listEl}
     >
 
       { list.map((country, itemIndex) => (
         <ListItem
           key={country.alpha2}
-          bsPrefix={bsPrefix}
+          classPrefix={classPrefix}
           country={country}
           active={itemIndex === activeItemIndex}
           countryLabelFormatter={countryLabelFormatter}

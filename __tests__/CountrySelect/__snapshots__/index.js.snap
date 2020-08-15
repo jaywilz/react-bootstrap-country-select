@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CountrySelect should render correctly without props 1`] = `
+<div
+  className="country-select country-select--flush"
+>
+  <div
+    className="country-select__input-group input-group"
+  >
+    <input
+      autoComplete="false"
+      className="country-select__form-control form-control"
+      disabled={false}
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="Type or select country..."
+      spellCheck={false}
+      value=""
+    />
+  </div>
+</div>
+`;

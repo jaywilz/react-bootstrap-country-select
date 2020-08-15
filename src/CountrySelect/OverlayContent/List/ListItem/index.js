@@ -5,7 +5,7 @@ import { classNames } from '../../../util';
 import './style.scss';
 
 const ListItem = forwardRef(({
-  bsPrefix,
+  classPrefix,
   country,
   country: {
     flag,
@@ -17,22 +17,22 @@ const ListItem = forwardRef(({
 }, ref) => {
 
   const className = classNames([
-    `${bsPrefix}__list-item`,
+    `${classPrefix}__list-item`,
     active && 'active',
   ]);
 
   return (
-    <div
+    <li
       className={className}
       onClick={onClick}
       ref={ref}
     >
               
-      {flags ? <span className={`${bsPrefix}__flag`}>{flag}</span> : null}
+      {flags ? <span className={`${classPrefix}__flag`}>{flag}</span> : null}
   
       {countryLabelFormatter(country)}
   
-    </div>
+    </li>
   );
 
 });

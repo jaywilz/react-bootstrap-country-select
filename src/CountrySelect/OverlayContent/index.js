@@ -5,7 +5,7 @@ import List from './List';
 import './style.scss';
 
 const OverlayContent = ({
-  bsPrefix,
+  classPrefix,
   list,
   activeListItemIndex,
   countryLabelFormatter,
@@ -17,7 +17,7 @@ const OverlayContent = ({
 
   const el = useRef(null);
 
-  const handleAciveItemCutoff = overflowAmount => {
+  const handleAciveItemCutOff = overflowAmount => {
 
     el.current.scrollTop = el.current.scrollTop + overflowAmount;
 
@@ -25,7 +25,7 @@ const OverlayContent = ({
 
   return (
     <div
-      className={`${bsPrefix}__overlay-content`}
+      className={`${classPrefix}__overlay-content`}
       style={{
         maxHeight: `${maxHeight}px`,
       }}
@@ -34,7 +34,7 @@ const OverlayContent = ({
 
       {!(list.length >= 1) &&
         <div
-          className={`${bsPrefix}__no-matches`}
+          className={`${classPrefix}__no-matches`}
         >
 
           {noMatchesText}
@@ -44,14 +44,14 @@ const OverlayContent = ({
 
       {(list.length >= 1) &&
         <List
-          bsPrefix={bsPrefix}
+          classPrefix={classPrefix}
           containerEl={el.current}
           list={list}
           activeItemIndex={activeListItemIndex}
           countryLabelFormatter={countryLabelFormatter}
           flags={flags}
           onItemClick={onListItemClick}
-          onActiveItemCutOverflow={handleAciveItemCutoff}
+          onActiveItemOverflow={handleAciveItemCutOff}
         />
       }
     </div>
