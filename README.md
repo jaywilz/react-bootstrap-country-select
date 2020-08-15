@@ -47,26 +47,26 @@ const MyComponent = () => {
 
  - Compatible with React Bootstrap v1.0.0+ and Bootstrap 4;
  - Implemented using standard React Bootstrap components;
- - Autosuggest: a list of matching countries is displayed text is entered in input;
+ - Autosuggest: a list of matching countries is displayed when the input text changes;
  - Country data is provided;
- - Specific countries can be excluded or additional countries can be added;
+ - Specific countries can be excluded and additional countries added;
  - Country flag icons;
- - onChange and onTextChange callbacks; 
- - Custom sort and country list formatter functions can be provided;
+ - onChange and onTextChange callbacks;
+ - Custom sort and country list formatter functions;
  - Aligns horizontally with Bootstrap form controls;
- - Bootstrap small (`sm`) and large (`lg`) sizes are supported;
+ - Bootstrap small (`sm`) and large (`lg`) sizes are supported
 
 ## Options (as React props)
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `object` \| `string` | | The current value: a country object or ID |
-| `onChange` | `function` | | A callback fired when a country is selected. |
-| `onTextChange` | `function` | | A callback fired when text in. |
-| `countries` | `array` | | An array of country objects used to populate the country list. Provide this if you'd like to use your own countries data. |
+| `onChange` | `function` | | A callback fired when a country is selected. The argument is the country object or null. |
+| `onTextChange` | `function` | | A callback fired when text in. The first argument is the text value and the second argument is the input's change event object. |
+| `countries` | `array` | | An array of country objects used to populate the country list. Provide this if you'd like to use your own countries data. A country object has the properties: `id`, `name`, `flag`, `alpha2`, `alpha3` and `ioc`. |
 | `exclusions` | `array` | | An array of country IDs that defines the countries to be excluded from the country list. |
 | `additions` | `array` | | Additional countries in the same format as `countries`. |
-| `valueAs` | `object` \| `id` | `object` | Defines if `value` is an object or an ID. |
+| `valueAs` | `object` \| `id` | `object` | Determines if `value` and the `onChange` argmuent are a country object or an ID string. |
 | `flags` | `boolean` | `true` | Flags are displayed when `true`. |
 | `flush` | `boolean` | `true` | When `true` the selected country flag appears in the input. When `false` it is rendered using [`<InputGroup.Text/>`](https://react-bootstrap.netlify.app/components/input-group/). |
 | `disabled` | `boolean` | `false` | Disables the country select. |
@@ -75,12 +75,12 @@ const MyComponent = () => {
 | `size` | `'sm'` \| `'lg'` | | Input size variants, for compatibility with other Bootstrap form components. |
 | `listMaxHeight` | `number` | | Maximum pixel height of the list overlay. |
 | `sort` | `function` | | A custom sort function that determines the order of the country list. |
-| `matchNameFromStart` | `boolean` | `true` | If true country names are matched against inputted text from the string start. |
-| `matchAbbreviations` | `boolean` | `false` | If true alpha2, alpha3 and IOC abbreviations are used in addition to countries names when matching inputted text. |
-| `countryLabelFormatter` | `function` | | A custom country list item formatter. |
-| `throwInvalidValueError` | `boolean` | `false` | If true an error is thrown if the provided value does match a country. |
+| `matchNameFromStart` | `boolean` | `true` | If `true` autosuggest matches country names from the string start. |
+| `matchAbbreviations` | `boolean` | `false` | If `true` autosuggestm matches against alpha2, alpha3 and IOC abbreviations in addition to country names. |
+| `countryLabelFormatter` | `function` | | A custom country list item formatter. The argument is a country object. |
+| `throwInvalidValueError` | `boolean` | `false` | If `true` an error is thrown if the provided value does match a country. |
 | `formControlProps` | `object` | | Properties applied to the input `<FormControl/>`. |
-| `overlayProps` | `object` | | Properties applied to the `<div>` element. |
+| `overlayProps` | `object` | | Properties applied to the overlay `<div>` element that contains the country list. |
 | `bsPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized bootstrap css. |
 
 ## License

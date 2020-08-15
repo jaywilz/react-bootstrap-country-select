@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+.country-select {
+
+  &:not(.flush) {
+
+    .country-select__input-group__flag {
+  
+      min-width: $input-group-flag-min-width;
+  
+    }
+
+  }
+
+}

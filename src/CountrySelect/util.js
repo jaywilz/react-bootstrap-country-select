@@ -57,3 +57,5 @@ const EMOJI_FLAG_REGEX = /^[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]\s*/;
 export const isEmojiFlag = str => EMOJI_FLAG_REGEX.test(str);
 
 export const removeEmojiFlag = str => str.replace(EMOJI_FLAG_REGEX, '');
+
+export const classNames = items => items.filter(item => !!item).join(' ');

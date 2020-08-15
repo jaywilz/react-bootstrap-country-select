@@ -43,21 +43,22 @@ function App() {
           // onTextChange={setText}
           // flush={false}
           // flags={false}
-          // size='sm'
+          // size='lg'
           // valueAs='id'
           // throwInvalidValueError={false}
           // exclusions={[ 'fr', 'gb' ]}
           // listMaxHeight={500}
-          additions={[
-            {
-              id: "xx",
-              name: "Xxxx",
-              flag: "🇨🇺",
-              alpha2: "xx",
-              alpha3: "xxx",
-              ioc: "xxx"
-            },
-          ]}
+          // disabled
+          // additions={[
+          //   {
+          //     id: "xx",
+          //     name: "Xxxx",
+          //     flag: "🇨🇺",
+          //     alpha2: "xx",
+          //     alpha3: "xxx",
+          //     ioc: "xxx"
+          //   },
+          // ]}
         />
 
       </div>

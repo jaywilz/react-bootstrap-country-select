@@ -1,0 +1,16 @@
+@import '../variables.scss';
+
+.country-select__overlay-content {
+
+  border: $border;
+  border-radius: $border-radius;
+  overflow-y: scroll;
+
+  .country-select__no-matches {
+
+    padding: $list-item-padding;
+    color: $gray-600;
+
+  }
+
+}

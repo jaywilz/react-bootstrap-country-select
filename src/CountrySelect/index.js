@@ -8,9 +8,12 @@ import {
   applyExclusionsAndAdditions,
   removeEmojiFlag,
   getUpdatedList,
+  classNames,
 } from './util';
 
 import OverlayContent from './OverlayContent';
+
+import { DEFAULT_CLASS_PREFIX } from './constants';
 
 import reducer, { INITIAL_STATE } from './reducer';
 
@@ -24,7 +27,7 @@ import {
   clear,
 } from './actions';
 
-import style from './style.module.scss';
+import './style.scss';
 
 const CountrySelect = ({
   value,
@@ -48,6 +51,8 @@ const CountrySelect = ({
   listMaxHeight,
   formControlProps = {},
   overlayProps = {},
+  bsPrefix = DEFAULT_CLASS_PREFIX,
+  className,
 }) => {
 
   const inputGroupRef = useRef(null);
@@ -153,12 +158,23 @@ const CountrySelect = ({
 
   };
 
+  // const classes = `${style['country-select']} ${flush ? style.flush : ''} ${size ? style[size] : ''} ${focused ? style.focused : ''}`;
+
+  const classes = classNames([
+    className,
+    bsPrefix,
+    flush && 'flush',
+    focused && 'focus',
+  ]);
+
+  console.log('classes: ', classes);
+
   return (
-    <div className={`${style['country-select']} ${flush ? style.flush : ''} ${size ? style[size] : ''} ${focused ? style.focused : ''}`}>
+    <div className={classes}>
 
       <InputGroup
         ref={inputGroupRef}
-        className={style['input-group']}
+        className={`${bsPrefix}__input-group`}
         size={size}
       >
 
@@ -166,7 +182,7 @@ const CountrySelect = ({
           <InputGroup.Prepend>
 
             <InputGroup.Text
-              className={style['input-group__flag']}
+              className={`${bsPrefix}__input-group__flag`}
             >
 
               {selectedCountry ? selectedCountry.flag : ''}
@@ -178,10 +194,10 @@ const CountrySelect = ({
 
         <FormControl
           ref={formControlRef}
-          className={style['form-control']}
-          value={selectedCountry ? `${flush && flags ? selectedCountry.flag + '  ' : ''}${selectedCountry.name}` : inputText}
+          className={`${bsPrefix}__form-control`}
+          value={selectedCountry ? `${flush && flags ? selectedCountry.flag + '   ' : ''}${selectedCountry.name}` : inputText}
           onKeyDown={handleKey}
-          onChange={ev => inputChange(ev.target.value)}
+          onChange={ev => inputChange(ev.target.value, ev)}
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
@@ -214,6 +230,7 @@ const CountrySelect = ({
           >
 
             <OverlayContent
+              bsPrefix={bsPrefix}
               list={list}
               activeListItemIndex={activeListItemIndex}
               countryLabelFormatter={countryLabelFormatter}

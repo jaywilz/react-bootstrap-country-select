@@ -1,8 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import style from './style.module.scss';
+import { classNames } from '../../../util';
+
+import './style.scss';
 
 const ListItem = forwardRef(({
+  bsPrefix,
   country,
   country: {
     flag,
@@ -13,7 +16,10 @@ const ListItem = forwardRef(({
   onClick,
 }, ref) => {
 
-  const className = `${style['list-item']} ${active ? style.active : ''}`;
+  const className = classNames([
+    `${bsPrefix}__list-item`,
+    active && 'active',
+  ]);
 
   return (
     <div
@@ -22,7 +28,7 @@ const ListItem = forwardRef(({
       ref={ref}
     >
               
-      {flags ? <span className={style.flag}>{flag}</span> : null}
+      {flags ? <span className={`${bsPrefix}__flag`}>{flag}</span> : null}
   
       {countryLabelFormatter(country)}
   

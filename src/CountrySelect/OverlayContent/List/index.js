@@ -2,9 +2,10 @@ import React, { useRef, createRef, useEffect } from 'react';
 
 import ListItem from './ListItem';
 
-import style from './style.module.scss';
+import './style.scss';
 
 const List = ({
+  bsPrefix,
   containerEl,
   list,
   activeItemIndex,
@@ -42,13 +43,14 @@ const List = ({
 
   return (
     <ul
-      className={style.list}
+      className={`${bsPrefix}__list`}
       ref={listEl}
     >
 
       { list.map((country, itemIndex) => (
         <ListItem
           key={country.alpha2}
+          bsPrefix={bsPrefix}
           country={country}
           active={itemIndex === activeItemIndex}
           countryLabelFormatter={countryLabelFormatter}

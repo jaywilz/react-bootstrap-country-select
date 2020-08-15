@@ -1,0 +1,24 @@
+@import '../../../variables.scss';
+
+.country-select__list-item {
+
+  padding: $list-item-padding;
+  background-color: $white;
+  border: $border;
+  border-width: 0 0 $border-width;
+  color: $gray-900;
+
+  &.active, &:hover {
+
+    background-color: $gray-100;
+
+  }
+
+  .country-select__flag {
+
+    margin-right: 1em;
+    vertical-align: baseline;
+
+  }
+
+}

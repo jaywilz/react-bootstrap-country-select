@@ -2,9 +2,10 @@ import React, { useRef } from 'react';
 
 import List from './List';
 
-import style from './style.module.scss';
+import './style.scss';
 
 const OverlayContent = ({
+  bsPrefix,
   list,
   activeListItemIndex,
   countryLabelFormatter,
@@ -24,7 +25,7 @@ const OverlayContent = ({
 
   return (
     <div
-      className={style['overlay-content']}
+      className={`${bsPrefix}__overlay-content`}
       style={{
         maxHeight: `${maxHeight}px`,
       }}
@@ -33,7 +34,7 @@ const OverlayContent = ({
 
       {!(list.length >= 1) &&
         <div
-          className={style['no-matches']}
+          className={`${bsPrefix}__no-matches`}
         >
 
           {noMatchesText}
@@ -43,6 +44,7 @@ const OverlayContent = ({
 
       {(list.length >= 1) &&
         <List
+          bsPrefix={bsPrefix}
           containerEl={el.current}
           list={list}
           activeItemIndex={activeListItemIndex}

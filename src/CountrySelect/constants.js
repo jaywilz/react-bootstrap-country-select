@@ -1,3 +1,5 @@
+export const DEFAULT_CLASS_PREFIX = 'country-select';
+
 export const INIT = 'INIT';
 export const FOCUS = 'FOCUS';
 export const BLUR = 'BLUR';
