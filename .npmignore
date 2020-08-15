@@ -4,3 +4,4 @@ __manual_test__
 src
 CONTRIBUTING.md
 README.md
+rollup.config.js
