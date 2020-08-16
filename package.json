@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-country-select",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "A country select component with flag icons for React Bootstrap.",
   "keywords": [
     "react-bootstrap",
@@ -10,6 +10,7 @@
     "country select",
     "country dropdown"
   ],
+  "license": "MIT",
   "private": false,
   "repository": "git@github.com:jaywilz/react-bootstrap-country-select.git",
   "author": "Jason Wilson <jasoncwilson@gmail.com>",
