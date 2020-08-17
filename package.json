@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-country-select",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "A country select component with flag icons for React Bootstrap.",
   "keywords": [
     "react-bootstrap",
