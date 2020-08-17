@@ -4,11 +4,7 @@ A country select component with flag icons for React Bootstrap.
 
 <img src="./screenshots/react-bootstrap-country-select-no-text.png?raw=true" alt="React Bootstrap Country Select screenshot showing country select component when focused" width="494">
 
-<br/>
-
 <img src="./screenshots/react-bootstrap-country-select-search.png?raw=true" alt="React Bootstrap Country Select screenshot showing country select component with entered text and auto suggestions in dropdown below input" width="494">
-
-<br/>
 
 <img src="./screenshots/react-bootstrap-country-select-selected-country.png?raw=true" alt="React Bootstrap Country Select screenshot showing selected country" width="494">
 
