@@ -2,6 +2,8 @@
 
 A country select component with flag icons for React Bootstrap.
 
+<img src="./screenshots/react-bootstrap-country-select.png?raw=true" alt="React Bootstrap country Select screenshot showing country select component with entered text and auto suggestions in dropdown below input" width="494">
+
 ## Installation
 
     yarn add react-bootstrap-country-select
