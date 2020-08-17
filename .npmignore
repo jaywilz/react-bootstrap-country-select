@@ -1,8 +1,10 @@
 __mocks__
 __tests__
 __manual_test__
+screenshots
 src
 CONTRIBUTING.md
 README.md
 rollup.config.js
 .babelrc
+README.md
