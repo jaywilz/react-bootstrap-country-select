@@ -5,3 +5,4 @@ src
 CONTRIBUTING.md
 README.md
 rollup.config.js
+.babelrc
