@@ -21,6 +21,8 @@ export const filter = (matchNameFromStart, matchAbbreviations) => inputText => {
 
 };
 
+export const getInitialList = (countries, sort) => sort ? [ ...countries.sort(sort) ] : [ ...countries ];
+
 export const getUpdatedList = (inputText, list, activeListItemIndex, countries, sort, matchNameFromStart, matchAbbreviations) => {
 
   const currentActiveCountry = list[activeListItemIndex];

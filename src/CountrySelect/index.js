@@ -6,6 +6,7 @@ import { COUNTRIES } from './data';
 
 import {
   applyExclusionsAndAdditions,
+  getInitialList,
   removeEmojiFlag,
   getUpdatedList,
   classNames,
@@ -33,7 +34,7 @@ const CountrySelect = ({
   value,
   onChange = () => {},
   onTextChange,
-  countries = COUNTRIES,
+  countries = [ ...COUNTRIES ],
   exclusions,
   additions,
   valueAs = 'object',
@@ -86,11 +87,13 @@ const CountrySelect = ({
 
     const combinedCountries = applyExclusionsAndAdditions(countries, exclusions, additions);
 
-    init(dispatch)(combinedCountries);
+    const sorted = getInitialList(combinedCountries, sort);
+
+    init(dispatch)(sorted);
 
     hasInitRef.current = true;
 
-  }, [ countries, exclusions, additions ]);
+  }, [ countries, exclusions, additions, sort ]);
 
   useEffect(() => {
 
@@ -198,7 +201,7 @@ const CountrySelect = ({
           placeholder={placeholder}
           disabled={disabled}
           spellCheck={false}
-          autoComplete='false'
+          autoComplete='new-value'
           {...formControlProps}
         />
 

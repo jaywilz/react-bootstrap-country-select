@@ -23,6 +23,14 @@ h2 {
 
 }
 
+h3 {
+
+  margin-top: 1em;
+  font-weight: 500;
+  font-size: 1.25em;
+
+}
+
 .no-wrap {
 
   white-space: nowrap;
@@ -71,7 +79,7 @@ article {
 
 section {
 
-  margin: 6em 0;
+  margin: 4em 0;
 
 }
 
@@ -138,7 +146,7 @@ section {
 .code pre {
 
   clear: both;
-  display: none;
+  /* display: none; */
   border-radius: 5px;
 
 }
@@ -146,6 +154,13 @@ section {
 .code pre.show {
 
   display: block;
+
+}
+
+.shell > pre {
+
+  background: #f8f9fa;
+  padding: 0.5em;
 
 }
 

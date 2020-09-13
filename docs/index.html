@@ -12,11 +12,13 @@
     gtag('config', 'UA-34352389-12');
   </script>
   <title>React Bootstrap Country Select</title>
-  <meta name="description" content="React Bootstrap country select">
+  <meta name="description" content="An autosuggest country select component for React Bootstrap with built-in country data and flag icons.">
   <meta name="keywords" content="React Bootstrap country select, React Bootstrap country dropdown, country select, country dropdown, React Bootstrap, Bootstrap 4">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="p1WujmFx84LqS8CMAMh58Hhy-AFLKzUVXsdx_x42j-k" />
 
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/react-bootstrap-country-select.css">
   <link rel="stylesheet" href="css/code.css">
   <link rel="stylesheet" href="css/main.css">
 
@@ -39,11 +41,255 @@
 
       <h1>React Bootstrap Country Select</h1>
 
+      <p>React Bootstrap Country Select is an autosuggest country select component for React Bootstrap with built-in country data and flag icons.</p>
+
+      <img src="https://github.com/jaywilz/react-bootstrap-country-select/blob/master/screenshots/react-bootstrap-country-select-no-text.png?raw=true">
+
     </header>
 
     <section>
 
-      Examples coming soon. For now please visit the <a href="https://github.com/jaywilz/react-bootstrap-country-select">GitHub page</a>
+      <h2>Getting Started</h2>
+
+      <h3>Prerequisites</h3>
+
+      <p>React Bootstrap Country Select depends on <a href="https://www.npmjs.com/package/react-bootstrap">react-bootstrap</a> version 1.0.0+.
+      This and React version 16.8+ must be installed for the country select to work.</p>
+
+      <h3>Installation</h3>
+
+      <div class="code">
+        <pre><code class="language-jsx">yarn add react-bootstrap-country-select</code></pre>
+      </div>
+
+      <p>or</p>
+
+      <div class="code">
+        <pre><code class="language-jsx">npm install react-bootstrap-country-select</code></pre>
+      </div>
+
+      <h3>Adding the stylesheet</h3>
+
+      <p>Include the CSS, typically in your application's index.js or the same place you include bootstrap.css:</p>
+
+      <div class="code">
+        <pre><code class="language-jsx">import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';</code></pre>
+      </div>
+
+    </section>
+
+    <section>
+
+      <h2>Simplest Usage</h2>
+
+      <p>React Bootstrap Country Select requires two props to work: <em>value</em>, which is a <a href="#country-object">country object</a>* and <em>onChange</em>, a handler that will be invoked when a country is selected.</p>
+
+      <div class="example w1" id="example-simple-usage"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState(null);
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+/&gt;
+</code></pre>
+      </div>
+
+      <p>* By default the <a href="#value-as"><em>valueAs</em></a> prop is set to <em>object</em>. Optionally, you could use a ID string value instead.</p>
+
+      The full list of available options are documented on the <a href="https://github.com/jaywilz/react-bootstrap-country-select#options-as-react-props">GitHub repository page</a>.
+
+    </section>
+
+    <section>
+
+      <h2 id="country-object">Country object</h2>
+
+      <p>The country object has the following properties:</p>
+
+      <dl>
+        <dt>id</dt>
+        <dd>A unique identifier, for example <em>fr</em> for France.
+          For the provided <a href="https://github.com/jaywilz/react-bootstrap-country-select/blob/master/src/CountrySelect/data.js">data</a>
+          <em>id</em> is equal to <a href="#country-object__alpha2">alpha2</a> for all countries.
+          If you use you own data you must ensure that each <em>id</em> is unique.
+        </dd>
+        <dt>name</dt>
+        <dd>The English name of the country, for example <em>France</em>.</dd>
+        <dt>flag</dt>
+        <dd>The country flag emoji, for example 🇫🇷</dd>
+        <dt id="country-object__alpha2">alpha2</dt>
+        <dd>The lower case <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> code for the country, for example <em>de</em> in the case of Germany.
+          For the provided <a href="https://github.com/jaywilz/react-bootstrap-country-select/blob/master/src/CountrySelect/data.js">data</a> each alpha2 is unqiue, but this may not necessarily be true if you add you own data that included, for example <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Exceptional_reservations">reserved</a> or <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Deleted_codes">deleted</a> codes.
+        </dd>
+        <dt>alpha3</dt>
+        <dd>The lower case <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO 3166-1 alpha-3</a> code for the country, for example <em>deu</em> in the case of Germany.</dd>
+        <dt>ioc</dt>
+        <dd>The lower case <a href="https://en.wikipedia.org/wiki/List_of_IOC_country_codes">International Olympic Commimittee (IOC) three-letter abbreviation</a> country code,
+          which can be different from alpha2, for example <em>ger</em> for Germany.</dd>
+      </dl>
+
+    </section>
+
+    <section>
+
+      <h2 id="value-as">Value as object or ID string</h2>
+
+      <p>The <em>valueAs</em> prop determines whether the value is treated as an <a href="#country-object">object</a> representating a country or as a string that is a valid country ID.
+        If set to <em>object</em> the <em>value</em> prop's value should be an object that has an <em>id</em> property, that is a valid country ID.
+        If set to <em>id</em> the <em>value</em> prop's value should be a string that is valid country ID.
+        In either case the ID must correspond to one of the countries in the <a href="#countries-data">countries data</a>.
+        The onChange handler's first argument will be an object or ID string respectively.
+        By default the <em>valueAs</em> prop is set to 'object'. 
+      </p>
+
+      <p>In the following example <em>valueAs</em> is set to <em>id</em> and the <em>value</em> set as 'fr'.</p>
+
+      <div class="example w1" id="example-value-as"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState('fr');
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+  valueAs='id'
+/&gt;
+</code></pre>
+      </div>
+
+    </section>
+
+    <section>
+      
+      <h2 id="countries-data">Countries Data</h2>
+
+      <p>Use the <em>countries</em> prop if you would like to use your own custom data.
+        This should be an array of <a href="#country-object">country object</a>s.
+        The only properties that are required for the country select to work are id and name.
+        Of course, flags and autosuggest based on alpha2, alpha3 and IOC abbreviations will only work if provided.
+        If the <em>countries</em> prop is left unset the default
+        <a href="https://github.com/jaywilz/react-bootstrap-country-select/blob/master/src/CountrySelect/data.js">provided data</a> will be used.
+      </p>
+
+      <p>If the provided data almost suits your needs but you would like to append it with additional countries, you can use the <em>additions</em> prop,
+        which like the <em>countries</em> prop expects an array of <a href="#country-object">country object</a>s.
+        Additional countries that have <em>id</em> properties matching those in the provided data will replace those in the provided data.
+      </p>
+
+      <p>To exclude one or more countries, for example Antarticta, provide an array of country ID strings with the <em>exclusions</em> prop.
+      Exclusions are applied after additions.</p>
+
+    </section>
+
+    <section>
+      
+      <h2>Country flag icons</h2>
+
+      <p>A flag icon is displayed for each country in the list and for the selected country.
+        By default the <em>flags</em> prop is <em>true</em>. Set to <em>false</em> to hide flags.
+        By default the selected country's flag is displayed within the input at the start.
+        When the <em>flush</em> prop is set to <em>false</em> the selected country's flag is displayed using
+        React Bootstrap's <a href="https://react-bootstrap.netlify.app/components/input-group/">&lt;InputGroup.Text&gt;</a>,
+        as in this example:
+      </p>
+
+      <div class="example w1" id="example-flush"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState('fr');
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+  valueAs='id'
+  flush={false}
+/&gt;
+</code></pre>
+      </div>
+
+    </section>
+
+    <section>
+      
+      <h2>Sorting</h2>
+
+      <p>By default the list of countries is sorted alphabetically by name in ascending order.
+        If a different sort order is required a compare function can be provided using the <em>sort</em> prop.
+      </p>
+
+      <div class="example w1" id="example-sort"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState(null);
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+  sort={(c1, c2) =&gt; {
+    if (c1.name.length &gt; c2.name.length) return 1;
+    else if (c1.name.length &lt; c2.name.length) return -1;
+    else return 0;
+  }}
+/&gt;
+</code></pre>
+      </div>
+
+      <p>The compare function is invoked with a pair of country objects as its arguments
+        and should be implemented according to the 
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Description">Array.sort()</a>
+        method's description.
+      </p>
+
+    </section>
+
+    <section>
+      
+      <h2>List item formatter</h2>
+
+      <p>The format of the text label for each item in the country list can be customised using the <em>countryLabelFormatter</em> prop.
+      It accepts a formatter function where the argument is a country object.
+    The function should return a string or node.</p>
+
+      <div class="example w1" id="example-list-item-formatter"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState(null);
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+  countryLabelFormatter={country =&gt; `${country.name} (${country.alpha2})`}
+/&gt;
+</code></pre>
+      </div>
+
+      <p>In this example each country's name and alpha2 code are rendered as the list item labels.</p>
+
+    </section>
+
+    <section>
+      
+      <h2>Search as you type</h2>
+
+      <p>The list of countries appears when the input is focused and is filtered according to the entered text.
+        The props <em>matchNameFromStart</em> and <em>matchAbbreviations</em> affect the filtering behaviour.
+        The default is that <em>matchNameFromStart</em> is set to <em>true</em>, so entered input text matches from the start of each country name,
+        and that <em>matchAbbreviations</em> is set to <em>false</em>, so matching is done only against country names, not their ISO codes or IOC abbreviations.
+      </p>
+
+      <p>In the following example <em>matchNameFromStart</em> is set to <em>false</em> so that inputted text will be matched against country names for all string character positions.
+      And <em>matchAbbreviations</em> is set to <em>true</em> so that matching is done against countrys' ISO codes and IOC abbreviations in addition to their names.</p>
+
+      <div class="example w1" id="example-matching-options"></div>
+      <div class="code">
+        <pre><code class="language-jsx">const [ value, setValue ] = React.useState(null);
+
+&lt;CountrySelect
+  value={value}
+  onChange={setValue}
+  matchNameFromStart={false}
+  matchAbbreviations
+/&gt;
+</code></pre>
+      </div>
 
     </section>
 
@@ -67,17 +313,17 @@
 
   </article>
 
-  <!-- <script src="https://unpkg.com/jquery/dist/jquery.slim.min.js"></script> -->
-  <!-- <script src="https://unpkg.com/prismjs/prism.js"></script> -->
-  <!-- <script src="https://unpkg.com/prismjs/components/prism-jsx.js"></script> -->
-  <!-- <script src="https://unpkg.com/prismjs/plugins/autoloader/prism-autoloader.min.js"></script> -->
-  <!-- <script src="https://unpkg.com/react/umd/react.development.js"></script> -->
-  <!-- <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script> -->
-  <!-- <script src="https://unpkg.com/prop-types/prop-types.min.js"></script> -->
-  <!-- <script src="https://unpkg.com/react-bootstrap/dist/react-bootstrap.min.js"></script> -->
-  <!-- <script src="js/main.js"></script> -->
-  <!-- <script src="js/examples-umd.js"></script> -->
-  <!-- <script src="js/examples.js"></script> -->
+  <script src="https://unpkg.com/jquery/dist/jquery.slim.min.js"></script>
+  <script src="https://unpkg.com/prismjs/prism.js"></script>
+  <script src="https://unpkg.com/prismjs/components/prism-jsx.js"></script>
+  <script src="https://unpkg.com/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://unpkg.com/react/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://unpkg.com/react-bootstrap/dist/react-bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/examples-umd.js"></script>
+  <script src="js/examples.js"></script>
 
 </body>
 </html>
