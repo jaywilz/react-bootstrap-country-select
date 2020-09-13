@@ -1,4 +1,7 @@
-# React Bootstrap Country Select
+# React Bootstrap Country Select &nbsp; [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React%20Bootstrap%20range%20slider%20with%20tooltips%20%28Bootstrap%204%29&url=https://github.com/jaywilz/react-bootstrap-country-select&hashtags=reactbootstrap,bootstrap,ux)
+
+[![License: MIT](https://img.shields.io/github/license/jaywilz/react-bootstrap-country-select)](https://github.com/jaywilz/react-bootstrap-country-select/blob/master/LICENSE) [![NPM version](https://img.shields.io/npm/v/react-bootstrap-country-select)](https://www.npmjs.com/package/react-bootstrap-country-select) [![Required react version](https://img.shields.io/npm/dependency-version/react-bootstrap-country-select/peer/react)](https://github.com/jaywilz/react-bootstrap-country-select/blob/master/package.json) [![Issues](https://img.shields.io/github/issues/jaywilz/react-bootstrap-country-select)](https://github.com/jaywilz/react-bootstrap-country-select/issues) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-bootstrap-country-select)](https://bundlephobia.com/result?p=react-bootstrap-country-select)
+
 
 A country select component with flag icons for React Bootstrap.
 
