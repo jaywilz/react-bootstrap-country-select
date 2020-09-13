@@ -2,6 +2,8 @@
 
 A country select component with flag icons for React Bootstrap.
 
+Go to the [demos](https://jaywilz.github.io/react-bootstrap-country-select/) page to see it in action.
+
 <img src="./screenshots/react-bootstrap-country-select-no-text.png?raw=true" alt="React Bootstrap Country Select screenshot showing country select component when focused" width="494">
 
 <img src="./screenshots/react-bootstrap-country-select-search.png?raw=true" alt="React Bootstrap Country Select screenshot showing country select component with entered text and auto suggestions in dropdown below input" width="494">
@@ -88,6 +90,10 @@ const MyComponent = () => {
 | `formControlProps` | `object` | | Properties applied to the `<FormControl/>` input. |
 | `overlayProps` | `object` | | Properties applied to the overlay `<div>` element that contains the country list. |
 | `classPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized CSS. |
+
+For further documentation and live examples visit the [website](https://jaywilz.github.io/react-bootstrap-country-select/).
+
+If you have a usage query or feature request please [create an issue](https://github.com/jaywilz/react-bootstrap-country-select/issues/new).
 
 ## License
 
