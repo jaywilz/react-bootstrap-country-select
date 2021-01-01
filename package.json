@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-country-select",
-  "version": "0.7.11",
+  "version": "0.7.12",
   "description": "A country select component with flag icons for React Bootstrap.",
   "keywords": [
     "react-bootstrap",
@@ -19,9 +19,9 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
+    "react": ">=16.8.0",
     "react-bootstrap": "^1.0.0",
-    "react-dom": "^16.8.0"
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
