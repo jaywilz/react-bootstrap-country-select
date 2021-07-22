@@ -5,21 +5,25 @@ import sass from 'rollup-plugin-sass';
 import path from 'path';
 import license from 'rollup-plugin-license';
 import resolve from '@rollup/plugin-node-resolve';
+// import typescript from '@rollup/plugin-typescript'; // supports declarations generation
+import ts from 'rollup-plugin-ts'; // supports declarations generation
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const outputFile = NODE_ENV === 'examples' ? './docs/js/examples-umd.js' : (NODE_ENV === 'production' ? './dist/index.js' : './dist/dev.js');
 
 export default {
-  input: './src/index.js',
+  input: './src/index.ts',
   output: {
     file: outputFile,
     format: NODE_ENV === 'examples' ? 'umd' : 'cjs',
     name: NODE_ENV === 'examples' ? 'ReactBootstrapCountrySelect' : undefined,
+    sourcemap: true,
   },
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
+    ts(),
     babel({
       exclude: ['node_modules/**'],
     }),
@@ -38,5 +42,5 @@ export default {
       },
     }),
   ],
-  external: NODE_ENV === 'examples' ? [ 'react', 'react-dom'] : [ 'react', 'react-bootstrap', 'react-dom' ],
+  external: NODE_ENV === 'examples' ? [ 'react', 'react-dom'] : [ 'react', 'react-bootstrap', 'react-dom', 'classnames' ],
 };

@@ -1,4 +1,6 @@
-export const applyExclusionsAndAdditions = (countries, exclusions, additions) => {
+import ICountry from './ICountry';
+
+export const applyExclusionsAndAdditions = (countries: ICountry[], exclusions?: string[], additions?: ICountry[]) => {
 
   if (!exclusions && !additions) return countries;
 
@@ -11,7 +13,7 @@ export const applyExclusionsAndAdditions = (countries, exclusions, additions) =>
 
 };
 
-export const filter = (matchNameFromStart, matchAbbreviations) => inputText => {
+export const filter = (matchNameFromStart: boolean, matchAbbreviations: boolean) => (inputText: string) => {
 
   const regex = new RegExp(`${matchNameFromStart ? '^' : ''}${inputText}`, 'i');
 
@@ -21,9 +23,17 @@ export const filter = (matchNameFromStart, matchAbbreviations) => inputText => {
 
 };
 
-export const getInitialList = (countries, sort) => sort ? [ ...countries.sort(sort) ] : [ ...countries ];
+export const getInitialList = (countries: ICountry[], sort: (c1: ICountry, c2: ICountry) => number) => sort ? [ ...countries.sort(sort) ] : [ ...countries ];
 
-export const getUpdatedList = (inputText, list, activeListItemIndex, countries, sort, matchNameFromStart, matchAbbreviations) => {
+export const getUpdatedList = (
+  inputText: string,
+  list: ICountry[],
+  activeListItemIndex: number,
+  countries: ICountry[],
+  sort: (c1: ICountry, c2: ICountry) => number,
+  matchNameFromStart: boolean,
+  matchAbbreviations: boolean,
+) => {
 
   const currentActiveCountry = list[activeListItemIndex];
 

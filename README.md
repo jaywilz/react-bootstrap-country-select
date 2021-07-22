@@ -90,6 +90,7 @@ const MyComponent = () => {
 | `matchAbbreviations` | `boolean` | `false` | If `true` autosuggest matches against alpha2, alpha3 and IOC abbreviations in addition to country names. |
 | `countryLabelFormatter` | `function` | | A custom country list item formatter. The argument is a country object. |
 | `throwInvalidValueError` | `boolean` | `false` | If `true` an error is thrown if the provided value does not match a country. |
+<!-- | `closeOnSelect` | `boolean` | `true` | If `true` the list overlay will close when a country is selected. If `false` the list overlay will remain visible while the input is focused. | -->
 | `formControlProps` | `object` | | Properties applied to the `<FormControl/>` input. |
 | `overlayProps` | `object` | | Properties applied to the overlay `<div>` element that contains the country list. |
 | `classPrefix` | `string` | `'country-select'` | Change the underlying component CSS base class name and modifier class names prefix. **This is an escape hatch** for working with heavily customized CSS. |

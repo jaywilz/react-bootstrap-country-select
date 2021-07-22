@@ -6,3 +6,4 @@ src
 CONTRIBUTING.md
 rollup.config.js
 .babelrc
+*.tgz

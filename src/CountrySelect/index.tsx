@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useReducer } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect, useReducer, ReactNode, ChangeEvent } from 'react';
+// import PropTypes from 'prop-types';
 import { InputGroup, FormControl, Overlay } from 'react-bootstrap';
 
 import { COUNTRIES } from './data';
@@ -11,6 +11,8 @@ import {
   getUpdatedList,
   classNames,
 } from './util';
+
+import ICountry from './ICountry';
 
 import OverlayContent from './OverlayContent';
 
@@ -29,6 +31,33 @@ import {
 } from './actions';
 
 import './style.scss';
+
+export interface CountrySelectProps {
+  value: string | ICountry;
+  onChange: (countryIdOrCountry: string | ICountry) => void;
+  onTextChange: (text: string, changeEvent: ChangeEvent) => void;
+  countries?: ICountry[];
+  exclusions?: string[];
+  additions?: ICountry[];
+  valueAs?: 'id' | 'object';
+  flags?: boolean;
+  flush?: boolean;
+  disabled?: boolean;
+  placeholder?: ReactNode;
+  noMatchesText?: ReactNode;
+  size?: 'sm' | 'lg';
+  sort?: (c1: ICountry, c2: ICountry) => number; 
+  matchNameFromStart?: boolean;
+  matchAbbreviations?: boolean;
+  countryLabelFormatter?: (country: ICountry) => ReactNode;
+  throwInvalidValueError?: boolean;
+  listMaxHeight?: number;
+  closeOnSelect?: true;
+  formControlProps?: any; // TODO
+  overlayProps?: any; // TODO
+  classPrefix?: string;
+  className?: string;
+}
 
 const CountrySelect = ({
   value,
@@ -50,11 +79,12 @@ const CountrySelect = ({
   countryLabelFormatter = ({ name }) => name,
   throwInvalidValueError = false, 
   listMaxHeight,
+  closeOnSelect = true,
   formControlProps = {},
   overlayProps = {},
   classPrefix = DEFAULT_CLASS_PREFIX,
   className,
-}) => {
+}: CountrySelectProps) => {
 
   const inputGroupRef = useRef(null);
   const formControlRef = useRef(null);
@@ -76,7 +106,9 @@ const CountrySelect = ({
   const handleCountrySelect = countrySelect(dispatch);
   const handleClear = clear(dispatch);
 
-  const selectedCountry = value ? (combinedCountries || []).find(country => country.id === (value.id || value)) : null;
+  const getCountryId = (value: ICountry | string): string => (typeof value === 'string' ? value : value.id);
+
+  const selectedCountry = value ? (combinedCountries || []).find(country => country.id === getCountryId(value)) : null;
 
   if (throwInvalidValueError && value && !selectedCountry)
     throw new Error(`No matching country for value: ${JSON.stringify(value)}`);
@@ -117,7 +149,7 @@ const CountrySelect = ({
 
   };
 
-  const inputChange = text => {
+  const inputChange = (text, ev) => {
 
     if (selectedCountry && flags) {
 
@@ -130,7 +162,7 @@ const CountrySelect = ({
 
     handleTextChange(text, updatedList, updatedActiveListItemIndex);
 
-    if (onTextChange) onTextChange(text);
+    if (onTextChange) onTextChange(text, ev);
     if (value) onChange(null);
 
   };
@@ -211,7 +243,7 @@ const CountrySelect = ({
         target={inputGroupRef.current}
         rootClose
         placement='bottom-start'
-        show={focused && !selectedCountry}
+        show={focused && (!selectedCountry || !closeOnSelect)} // experimental; not documented
         onHide={() => {}}
         transition
         {...overlayProps}
@@ -247,41 +279,6 @@ const CountrySelect = ({
     </div>
   );
 
-};
-
-CountrySelect.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
-    PropTypes.string,
-  ]),
-  onChange: PropTypes.func,
-  onTextChange: PropTypes.func,
-  countries: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })),
-  exclusions: PropTypes.arrayOf(PropTypes.string),
-  additions: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })),
-  valueAs: PropTypes.oneOf([ 'object', 'id' ]),
-  flags: PropTypes.bool,
-  flush: PropTypes.bool,
-  disabled: PropTypes.bool,
-  placeholder: PropTypes.node,
-  noMatchesText: PropTypes.node,
-  size: PropTypes.oneOf([ 'sm', 'lg' ]),
-  sort: PropTypes.func,
-  matchNameFromStart: PropTypes.bool,
-  matchAbbreviations: PropTypes.bool,
-  countryLabelFormatter: PropTypes.func,
-  throwInvalidValueError: PropTypes.bool, 
-  listMaxHeight: PropTypes.number,
-  formControlProps: PropTypes.object,
-  overlayProps: PropTypes.object,
 };
 
 export default CountrySelect;

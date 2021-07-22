@@ -1,8 +1,21 @@
-import React, { useRef, createRef, useEffect } from 'react';
+import React, { useRef, createRef, useEffect, ReactNode, Ref } from 'react';
+
+import ICountry from '../../ICountry';
 
 import ListItem from './ListItem';
 
 import './style.scss';
+
+export interface ListProps {
+  classPrefix: string;
+  containerEl: HTMLDivElement;
+  list: ICountry[];
+  activeItemIndex: number;
+  countryLabelFormatter: (country: ICountry) => ReactNode;
+  flags: boolean;
+  onItemClick: (itemIndex: number) => void;
+  onActiveItemOverflow: (overflowAmount: number) => void;
+}
 
 const List = ({
   classPrefix,
@@ -12,11 +25,12 @@ const List = ({
   countryLabelFormatter,
   flags,
   onItemClick,
-  onActiveItemOverflow
-}) => {
+  onActiveItemOverflow,
+}: ListProps) => {
 
   const listEl = useRef(null);
-  const activeItemEl = createRef(null);
+  // const activeItemEl = createRef();
+  const activeItemEl = useRef<HTMLLIElement>();
 
   useEffect(() => {
 

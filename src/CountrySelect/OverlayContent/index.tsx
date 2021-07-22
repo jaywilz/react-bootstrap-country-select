@@ -1,8 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, ReactNode } from 'react';
 
 import List from './List';
 
+import ICountry from '../ICountry';
+
 import './style.scss';
+
+export interface OverlayContentProps {
+  classPrefix: string;
+  list: ICountry[],
+  activeListItemIndex: number;
+  countryLabelFormatter: (country: ICountry) => ReactNode;
+  flags: boolean;
+  noMatchesText: ReactNode;
+  maxHeight: number;
+  onListItemClick: (itemIndex: number) => void;
+}
 
 const OverlayContent = ({
   classPrefix,
@@ -13,7 +26,7 @@ const OverlayContent = ({
   noMatchesText,
   maxHeight = 225,
   onListItemClick,
-}) => {
+}: OverlayContentProps) => {
 
   const el = useRef(null);
 

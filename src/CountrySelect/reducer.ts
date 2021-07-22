@@ -70,7 +70,7 @@ const reducer = (state, action) => {
     case BLUR: return blur(state);
     case TEXT_CHANGE: return textChange(state, action);
     case ACTIVE_LIST_ITEM_CHANGE: return activeListItemChange(state, action);
-    case COUNTRY_SELECT: return countrySelect(state, action);
+    case COUNTRY_SELECT: return countrySelect(state);
     case CLEAR: return clear(state);
     default: throw new Error(`No such reducer action: ${action.type}`);
   }

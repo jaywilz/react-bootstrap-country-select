@@ -1,8 +1,19 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Ref, ReactNode } from 'react';
 
 import { classNames } from '../../../util';
 
+import ICountry from '../../../ICountry';
+
 import './style.scss';
+
+export interface ListItemProps {
+  classPrefix: string;
+  country: ICountry;
+  active: boolean;
+  countryLabelFormatter: (country: ICountry) => ReactNode;
+  flags: boolean;
+  onClick: () => void;
+}
 
 const ListItem = forwardRef(({
   classPrefix,
@@ -14,7 +25,7 @@ const ListItem = forwardRef(({
   countryLabelFormatter,
   flags,
   onClick,
-}, ref) => {
+}: ListItemProps, ref: Ref<HTMLLIElement>) => {
 
   const className = classNames([
     `${classPrefix}__list-item`,
