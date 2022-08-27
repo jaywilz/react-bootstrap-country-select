@@ -5,8 +5,8 @@ import sass from 'rollup-plugin-sass';
 import path from 'path';
 import license from 'rollup-plugin-license';
 import resolve from '@rollup/plugin-node-resolve';
-// import typescript from '@rollup/plugin-typescript'; // supports declarations generation
-import ts from 'rollup-plugin-ts'; // supports declarations generation
+import typescript from '@rollup/plugin-typescript';
+import pkg from './package.json';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const outputFile = NODE_ENV === 'examples' ? './docs/js/examples-umd.js' : (NODE_ENV === 'production' ? './dist/index.js' : './dist/dev.js');
@@ -23,7 +23,9 @@ export default {
     replace({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
-    ts(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     babel({
       exclude: ['node_modules/**'],
     }),
@@ -42,5 +44,8 @@ export default {
       },
     }),
   ],
-  external: NODE_ENV === 'examples' ? [ 'react', 'react-dom'] : [ 'react', 'react-bootstrap', 'react-dom', 'classnames' ],
+  external: NODE_ENV === 'examples' ? [ 'react', 'react-dom'] : [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ],
 };

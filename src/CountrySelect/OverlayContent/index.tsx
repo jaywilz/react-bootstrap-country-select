@@ -13,7 +13,7 @@ export interface OverlayContentProps {
   countryLabelFormatter: (country: ICountry) => ReactNode;
   flags: boolean;
   noMatchesText: ReactNode;
-  maxHeight: number;
+  maxHeight?: number;
   onListItemClick: (itemIndex: number) => void;
 }
 
@@ -28,11 +28,13 @@ const OverlayContent = ({
   onListItemClick,
 }: OverlayContentProps) => {
 
-  const el = useRef(null);
+  const el = useRef<HTMLDivElement>(null);
 
-  const handleAciveItemCutOff = overflowAmount => {
+  const handleAciveItemCutOff = (overflowAmount: number) => {
 
-    el.current.scrollTop = el.current.scrollTop + overflowAmount;
+    if (el.current) {
+      el.current.scrollTop = el.current.scrollTop + overflowAmount;
+    }
 
   };
 
@@ -58,7 +60,7 @@ const OverlayContent = ({
       {(list.length >= 1) &&
         <List
           classPrefix={classPrefix}
-          containerEl={el.current}
+          containerEl={el.current || undefined}
           list={list}
           activeItemIndex={activeListItemIndex}
           countryLabelFormatter={countryLabelFormatter}
