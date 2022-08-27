@@ -4,7 +4,7 @@ export const applyExclusionsAndAdditions = (countries: ICountry[], exclusions?: 
 
   if (!exclusions && !additions) return countries;
 
-  const excluded = (exclusions || []).reduce((acc, id) => ({ ...acc, [id]: true }), {});
+  const excluded = (exclusions || []).reduce((acc, id) => ({ ...acc, [id]: true }), {} as Record<string, boolean>);
 
   return [
     ...countries.filter(c => excluded[c.id] === undefined),
@@ -18,22 +18,22 @@ export const filter = (matchNameFromStart: boolean, matchAbbreviations: boolean)
   const regex = new RegExp(`${matchNameFromStart ? '^' : ''}${inputText}`, 'i');
 
   return matchAbbreviations
-    ? ({ name, alpha2, alpha3, ioc }) => regex.test(name) || regex.test(alpha2) || regex.test(alpha3) || regex.test(ioc)
-    : ({ name }) => regex.test(name);
+    ? ({ name, alpha2, alpha3, ioc }: { name: string; alpha2: string; alpha3: string; ioc: string; }) => regex.test(name) || regex.test(alpha2) || regex.test(alpha3) || regex.test(ioc)
+    : ({ name }: { name: string; }) => regex.test(name);
 
 };
 
-export const getInitialList = (countries: ICountry[], sort: (c1: ICountry, c2: ICountry) => number) => sort ? [ ...countries.sort(sort) ] : [ ...countries ];
+export const getInitialList = (countries: ICountry[], sort?: (c1: ICountry, c2: ICountry) => number) => sort ? [ ...countries.sort(sort) ] : [ ...countries ];
 
 export const getUpdatedList = (
   inputText: string,
   list: ICountry[],
   activeListItemIndex: number,
   countries: ICountry[],
-  sort: (c1: ICountry, c2: ICountry) => number,
   matchNameFromStart: boolean,
   matchAbbreviations: boolean,
-) => {
+  sort?: (c1: ICountry, c2: ICountry) => number,
+): [ICountry[], number] => {
 
   const currentActiveCountry = list[activeListItemIndex];
 
@@ -62,12 +62,28 @@ export const getUpdatedList = (
 
 };
 
-export const areEqual = (v1, v2) => (!v1 && !v2) || (v1 && v2 && ((v1.id && v2.id && v1.id === v2.id) || v1 === v2));
+export const areEqual = (v1: string | ICountry, v2: string | ICountry) => {
+
+  if (!v1 && !v2) {
+    return true;
+  }
+
+  if (typeof v1 === 'string' && typeof v2 === 'string') {
+    return v1 === v2;
+  }
+
+  if (v1 && v2 && typeof v1 === 'object' && typeof v2 === 'object') {
+    return v1.id === v2.id;
+  }
+
+  return false;
+
+};
 
 const EMOJI_FLAG_REGEX = /^[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]\s*/;
 
-export const isEmojiFlag = str => EMOJI_FLAG_REGEX.test(str);
+export const isEmojiFlag = (str: string) => EMOJI_FLAG_REGEX.test(str);
 
-export const removeEmojiFlag = str => str.replace(EMOJI_FLAG_REGEX, '');
+export const removeEmojiFlag = (str: string) => str.replace(EMOJI_FLAG_REGEX, '');
 
-export const classNames = items => items.filter(item => !!item).join(' ');
+export const classNames = (items: (string | undefined | null | false | 0)[]) => items.filter(item => !!item).join(' ');

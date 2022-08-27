@@ -8,35 +8,44 @@ import {
   CLEAR,
 } from './constants';
 
-export const init = dispatch => combinedCountries => dispatch({
+import ICountry from '../CountrySelect/ICountry';
+import { IAction, IActionInit, IActionTextChange, IActionActiveListItemChange } from './reducer';
+
+export const init = (dispatch: React.Dispatch<IActionInit>) => (combinedCountries: ICountry[]) => dispatch({
   type: INIT,
   combinedCountries,
 });
 
-export const focus = dispatch => () => dispatch({
+export const focus = (dispatch: React.Dispatch<IAction>) => () => dispatch({
   type: FOCUS,
 });
 
-export const blur = dispatch => () => dispatch({
+export const blur = (dispatch: React.Dispatch<IAction>) => () => dispatch({
   type: BLUR,
 });
 
-export const textChange = dispatch => (inputText, list, activeListItemIndex) => dispatch({
+export const textChange = (dispatch: React.Dispatch<IActionTextChange>) => (
+  inputText: string,
+  list: ICountry[],
+  activeListItemIndex: number,
+) => dispatch({
   type: TEXT_CHANGE,
   inputText,
   list,
   activeListItemIndex,
 });
 
-export const activeListItemChange = dispatch => activeListItemIndex => dispatch({
+export const activeListItemChange = (dispatch: React.Dispatch<IActionActiveListItemChange>) => (
+  activeListItemIndex: number,
+) => dispatch({
   type: ACTIVE_LIST_ITEM_CHANGE,
   activeListItemIndex,
 });
 
-export const countrySelect = dispatch => () => dispatch({
+export const countrySelect = (dispatch: React.Dispatch<IAction>) => () => dispatch({
   type: COUNTRY_SELECT,
 });
 
-export const clear = dispatch => () => dispatch({
+export const clear = (dispatch: React.Dispatch<IAction>) => () => dispatch({
   type: CLEAR,
 });

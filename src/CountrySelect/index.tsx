@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useReducer, ReactNode, ChangeEvent } from 'react';
-// import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect, useReducer, ReactNode, ChangeEvent, memo } from 'react';
 import { InputGroup, FormControl, Overlay } from 'react-bootstrap';
 
 import { COUNTRIES } from './data';
@@ -34,8 +33,8 @@ import './style.scss';
 
 export interface CountrySelectProps {
   value: string | ICountry;
-  onChange: (countryIdOrCountry: string | ICountry) => void;
-  onTextChange: (text: string, changeEvent: ChangeEvent) => void;
+  onChange: (countryIdOrCountry: string | ICountry | null) => void;
+  onTextChange?: (text: string, changeEvent: ChangeEvent) => void;
   countries?: ICountry[];
   exclusions?: string[];
   additions?: ICountry[];
@@ -86,7 +85,7 @@ const CountrySelect = ({
   className,
 }: CountrySelectProps) => {
 
-  const inputGroupRef = useRef(null);
+  const inputGroupRef = useRef<HTMLDivElement>(null);
   const formControlRef = useRef(null);
   const hasInitRef = useRef(false);
   const [ width, setWidth ] = useState(-1);
@@ -129,11 +128,14 @@ const CountrySelect = ({
 
   useEffect(() => {
 
-    setWidth(inputGroupRef.current.offsetWidth);
+    if (inputGroupRef.current) {
+      console.log('width: ', inputGroupRef.current.offsetWidth);
+      setWidth(inputGroupRef.current.offsetWidth);
+    }
 
-  }, [ inputGroupRef ]);
+  }, [ inputGroupRef.current ]);
 
-  const select = listItemIndex => {
+  const select = (listItemIndex: number) => {
 
     const country = list[listItemIndex];
 
@@ -149,7 +151,7 @@ const CountrySelect = ({
 
   };
 
-  const inputChange = (text, ev) => {
+  const inputChange = (text: string, ev: React.ChangeEvent) => {
 
     if (selectedCountry && flags) {
 
@@ -158,7 +160,7 @@ const CountrySelect = ({
     }
 
     const [ updatedList, updatedActiveListItemIndex ]
-      = getUpdatedList(text, list, activeListItemIndex, combinedCountries, sort, matchNameFromStart, matchAbbreviations);
+      = getUpdatedList(text, list, activeListItemIndex, combinedCountries, matchNameFromStart, matchAbbreviations, sort);
 
     handleTextChange(text, updatedList, updatedActiveListItemIndex);
 
@@ -167,7 +169,7 @@ const CountrySelect = ({
 
   };
 
-  const handleKey = ev => {
+  const handleKey = (ev: React.KeyboardEvent) => {
 
     if (ev.key === 'ArrowUp') {
 
@@ -200,7 +202,9 @@ const CountrySelect = ({
   ]);
 
   return (
-    <div className={classes}>
+    <div
+      className={classes}
+    >
 
       <InputGroup
         ref={inputGroupRef}
@@ -209,17 +213,13 @@ const CountrySelect = ({
       >
 
         { (!flush && flags) && 
-          <InputGroup.Prepend>
+          <InputGroup.Text
+            className={`${classPrefix}__input-group__flag`}
+          >
 
-            <InputGroup.Text
-              className={`${classPrefix}__input-group__flag`}
-            >
-
-              {selectedCountry ? selectedCountry.flag : ''}
-            
-            </InputGroup.Text>
-            
-          </InputGroup.Prepend>
+            {selectedCountry ? selectedCountry.flag : ''}
+          
+          </InputGroup.Text>
         }
 
         <FormControl
@@ -281,4 +281,4 @@ const CountrySelect = ({
 
 };
 
-export default CountrySelect;
+export default memo(CountrySelect);

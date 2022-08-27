@@ -1,4 +1,4 @@
-import React, { useRef, createRef, useEffect, ReactNode, Ref } from 'react';
+import React, { useRef, useEffect, ReactNode } from 'react';
 
 import ICountry from '../../ICountry';
 
@@ -8,7 +8,7 @@ import './style.scss';
 
 export interface ListProps {
   classPrefix: string;
-  containerEl: HTMLDivElement;
+  containerEl?: HTMLDivElement;
   list: ICountry[];
   activeItemIndex: number;
   countryLabelFormatter: (country: ICountry) => ReactNode;
@@ -28,9 +28,8 @@ const List = ({
   onActiveItemOverflow,
 }: ListProps) => {
 
-  const listEl = useRef(null);
-  // const activeItemEl = createRef();
-  const activeItemEl = useRef<HTMLLIElement>();
+  const listEl = useRef<HTMLUListElement>(null);
+  const activeItemEl = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
 
